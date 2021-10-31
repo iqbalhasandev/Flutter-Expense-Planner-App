@@ -19,13 +19,13 @@ class MyHomePage extends StatelessWidget {
     Transaction(
       id: 't1',
       title: 'New Shoes',
-      ammount: 69.99,
+      amount: 69.99,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't2',
       title: 'Weekly Groceries',
-      ammount: 16.53,
+      amount: 16.53,
       date: DateTime.now(),
     ),
   ];
