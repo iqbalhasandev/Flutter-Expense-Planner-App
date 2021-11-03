@@ -44,10 +44,24 @@ class _NewTransctionState extends State<NewTransction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
             ),
-            FlatButton(
+            Row(
+              children: [
+                Text('No date Chosen!'),
+                FlatButton(
+                  onPressed: () {},
+                  textColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    'Choose Date',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            RaisedButton(
               onPressed: submitData,
               child: Text('Add Transaction'),
-              textColor: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              color: Theme.of(context).primaryColor,
             ),
           ],
         ),
