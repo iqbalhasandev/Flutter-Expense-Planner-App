@@ -63,21 +63,27 @@ class _NewTransctionState extends State<NewTransction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => _submitData(),
             ),
-            Row(
-              children: [
-                Text(_selectDate == null
-                    ? 'No date Chosen!'
-                    : 'picked date: ' +
-                        DateFormat.yMMMEd().format((_selectDate as DateTime))),
-                FlatButton(
-                  onPressed: _presentDatePicker,
-                  textColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    'Choose Date',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(_selectDate == null
+                        ? 'No date Chosen!'
+                        : 'picked date: ' +
+                            DateFormat.yMMMEd()
+                                .format((_selectDate as DateTime))),
                   ),
-                ),
-              ],
+                  FlatButton(
+                    onPressed: _presentDatePicker,
+                    textColor: Theme.of(context).primaryColor,
+                    child: Text(
+                      'Choose Date',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ),
             RaisedButton(
               onPressed: _submitData,
