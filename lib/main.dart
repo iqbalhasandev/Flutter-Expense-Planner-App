@@ -8,11 +8,11 @@ import './models/transaction.dart';
 import './widgets/chart.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
 
   runApp(MyApp());
 }
@@ -54,6 +54,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
+
+  bool _showChart = false;
 
   List<Transaction> get _recentTransctions {
     return _userTransactions.where((tx) {
@@ -111,6 +113,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
+    final chatWidget= Container(
+                    height: (mediaQuery.size.height -
+                            appBar.preferredSize.height -
+                            mediaQuery.padding.top) *
+                        0.3,
+                    child: Chart(_recentTransctions),
+                  );
+final transctionListWidge=Container(
+                    height: (mediaQuery.size.height -
+                            appBar.preferredSize.height -
+                            mediaQuery.padding.top) *
+                        0.7,
+                    child: TransctionList(_userTransactions, _deleteTransction),
+                  )
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -118,20 +134,22 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: (mediaQuery.size.height -
-                      appBar.preferredSize.height -
-                      mediaQuery.padding.top) *
-                  0.3,
-              child: Chart(_recentTransctions),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Show Chart'),
+                Switch(
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    }),
+              ],
             ),
-            Container(
-              height: (mediaQuery.size.height -
-                      appBar.preferredSize.height -
-                      mediaQuery.padding.top) *
-                  0.7,
-              child: TransctionList(_userTransactions, _deleteTransction),
-            ),
+            _showChart
+                ?chatWidget
+                :transctionListWidge ,
           ],
         ),
       ),
