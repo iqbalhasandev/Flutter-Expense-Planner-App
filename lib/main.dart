@@ -98,6 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final mediaQuery = MediaQuery.of(context);
     final appBar = AppBar(
       backgroundColor: Theme.of(context).primaryColor,
@@ -113,20 +115,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final chatWidget= Container(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.3,
-                    child: Chart(_recentTransctions),
-                  );
-final transctionListWidge=Container(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.7,
-                    child: TransctionList(_userTransactions, _deleteTransction),
-                  )
+    final chatWidget = Container(
+      height: (mediaQuery.size.height -
+              appBar.preferredSize.height -
+              mediaQuery.padding.top) *
+          0.7,
+      child: Chart(_recentTransctions),
+    );
+    final transctionListWidge = Container(
+      height: (mediaQuery.size.height -
+              appBar.preferredSize.height -
+              mediaQuery.padding.top) *
+          0.7,
+      child: TransctionList(_userTransactions, _deleteTransction),
+    );
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -134,22 +136,30 @@ final transctionListWidge=Container(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Show Chart'),
-                Switch(
-                    value: _showChart,
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
-                    }),
-              ],
-            ),
-            _showChart
-                ?chatWidget
-                :transctionListWidge ,
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Show Chart'),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (val) {
+                        setState(() {
+                          _showChart = val;
+                        });
+                      }),
+                ],
+              ),
+            if (isLandscape) _showChart ? chatWidget : transctionListWidge,
+            if (!isLandscape)
+              Container(
+                height: (mediaQuery.size.height -
+                        appBar.preferredSize.height -
+                        mediaQuery.padding.top) *
+                    0.3,
+                child: Chart(_recentTransctions),
+              ),
+            if (!isLandscape) transctionListWidge,
           ],
         ),
       ),
