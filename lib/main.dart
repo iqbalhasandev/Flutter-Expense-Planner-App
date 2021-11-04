@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void startAddNewTransction(BuildContext ctx) {
+  void _startAddNewTransction(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
         builder: (btx) {
@@ -87,33 +87,47 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          "Expense Planner",
-          // style: Theme.of(context).appBarTheme.textTheme.headline1,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () => startAddNewTransction(context),
-            icon: Icon(Icons.add),
-          ),
-        ],
+    final appBar = AppBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      title: Text(
+        "Expense Planner",
+        // style: Theme.of(context).appBarTheme.textTheme.headline1,
       ),
+      actions: [
+        IconButton(
+          onPressed: () => _startAddNewTransction(context),
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransctions),
-            TransctionList(_userTransactions, _deleteTransction),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.4,
+              child: Chart(_recentTransctions),
+            ),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.6,
+              child: TransctionList(_userTransactions, _deleteTransction),
+            ),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => startAddNewTransction(context),
+        onPressed: () => _startAddNewTransction(context),
         child: Icon(Icons.add),
       ),
     );
